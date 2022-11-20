@@ -6,10 +6,6 @@ const { saveToJson, appendToJson } = require('./helpers/saveToJson');
 
 const main = async () => {
 
-
-    // const fileExists = fs.existsSync('./db/db.json');
-    // console.log(fileExists)
-
     const questions = [
         {
             type: 'text',
@@ -22,17 +18,16 @@ const main = async () => {
             message: `How much did you spend? `
         }
     ];
-    (async () => {
-        const response = await prompts(questions)
 
-        const saveExpense = new Promise((resolve, reject) => {
+    const response = await prompts(questions)
 
-            resolve(saveToJson(response))
-
-        })
-
-    })()
-
+    const fileExists = fs.existsSync('./db/db.json');
+    // console.log(fileExists)
+    if (fileExists) {
+        appendToJson(response)
+    } else if (!fileExists) {
+        saveToJson(response)
+    }
 };
 
 main()

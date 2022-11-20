@@ -2,25 +2,21 @@ const fs = require('fs')
 
 const saveToJson = (data) => {
 
-    fs.appendFileSync('./db/db.json', JSON.stringify([data]), { 'flags': 'a+' }, (err) => {
+    fs.writeFileSync('./db/db.json', JSON.stringify([data]), (err) => {
         if (err) throw err
         console.log('The file has been saved!')
     })
 }
 
-const appendToJson = () => {
+const appendToJson = (data) => {
 
-
-    const fileData = JSON.parse(fs.readFileSync('../db/db.json'))
-    fileData.push(newData)
-
-    //Write the new data appended to previous into file
-
-    fs.writeFileSync('sample.json', JSON.stringify(fileData, null, 2));
-
+    const fileData = JSON.parse(fs.readFileSync('./db/db.json'))
+    fileData.push(data)
+    fs.writeFileSync('./db/db.json', JSON.stringify(fileData))
 };
 
 module.exports = {
     saveToJson,
+    appendToJson,
 }
 
